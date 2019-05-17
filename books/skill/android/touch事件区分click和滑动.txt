@@ -1,0 +1,35 @@
+setOnTouchListener(new OnTouchListener() {
+				
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					try {
+						switch (event.getAction()) {
+						case MotionEvent.ACTION_DOWN:
+						    downY = event.getY();
+						    isClick = true;
+							break;
+						case MotionEvent.ACTION_MOVE:
+							int move = (int)(downY - event.getY());
+							//System.out.println("move：" + move);
+							scrollToPos(move); //调用滑动处理事件
+							if(Math.abs(move) > 1){
+								isClick = false;
+							}
+							break;
+						case MotionEvent.ACTION_UP:
+							int x = (int)(event.getY() - downY);
+							if(Math.abs(x) <= 1 && isClick){
+								menu1.performClick();//产生点击事件
+								//viewPager.setCurrentItem(0);
+							}
+							break;
+
+						default:
+							break;
+						}
+					} catch (Exception e) {
+						e.printStackTrace();			
+					}
+					return true;
+				}
+			});
